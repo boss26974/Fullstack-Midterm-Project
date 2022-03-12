@@ -14,8 +14,8 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <Link href="/page2">
-            dangerouslySetInnerHTML
+          <Link href="/postContentPage">
+          dangerouslySetInnerHTML
           </Link>
         </h1>
 
