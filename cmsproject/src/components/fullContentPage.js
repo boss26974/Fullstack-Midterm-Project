@@ -5,6 +5,7 @@ import "../style/fullContent.css"
 
 function FullContentPage(){
   const localProps = useLocation();
+  const [authorname, setAuthorName] = useState("")
   const [allComment, setAllComment] = useState([])
 
   const filterComment = (array) => {
@@ -14,7 +15,7 @@ function FullContentPage(){
       setAllComment(newArray)
   }
 
-  let navigate = useNavigate(); 
+  let navigate = useNavigate();
     const routeChange = () =>{ 
         navigate('/addComment', {state: {post: localProps.state.post}})
     }
@@ -25,9 +26,16 @@ function FullContentPage(){
       .then((comments) => {filterComment(comments)})
     })
     .catch((err) => {console.log("failed to test")})
+
+    fetch("https://fswd-wp.devnss.com/wp-json/wp/v2/users/" + localProps.state.post.author)
+    .then((res) => {res.json()
+      .then((user) => {setAuthorName(user.name)})
+    })
+    .catch((err) => {console.log("failed to test")})
   }, [])
 
-  console.log(allComment)
+  console.log(localProps.state.post)
+  console.log(authorname)
 
     return(
       <div>
@@ -35,6 +43,10 @@ function FullContentPage(){
           <Row>
             <Col md={12} id="fullContent">
               <h1 id="fullContentTitle">{localProps.state.post.title.rendered}</h1>
+              <p style={{"fontSize" : "24px"}}><b>Categories : </b> {localProps.state.categories}</p>
+              <p style={{"fontSize" : "24px"}}><b>Tags : </b> {localProps.state.tags}</p>
+              <p style={{"fontSize" : "24px"}}><b>Author Name : </b>{authorname}</p>
+              <p style={{"fontSize" : "24px"}}><b>Create Date : </b>{localProps.state.post.date}</p>
               <div dangerouslySetInnerHTML={{__html: localProps.state.post.content.rendered}} />
             </Col>
             <Col md={12} id="allComment">

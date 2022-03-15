@@ -1,23 +1,12 @@
 import { useEffect, useState } from "react";
 import PostCard from "./postCard";
-import {Container, Row, Col} from "react-bootstrap"
+import {Container, Row, Col, Form} from "react-bootstrap"
 import "../style/tagCategory.css"
 
 function PostContent() {
     const [allpost, setAllPost] = useState([])
     const [allcatagories, setAllCategories] = useState([])
     const [alltags, setAllTags] = useState([])
-    let categoriesOption = {}
-    let tagOption = {}
-
-  const createCategorieOption = (cat) => {
-    let result = []
-    cat.map((category) => {
-      result[category.name] = false;
-      return 0
-    })
-    return result
-  }
 
   useEffect(() => {
     fetch("https://fswd-wp.devnss.com/wp-json/wp/v2/posts")
@@ -30,7 +19,6 @@ function PostContent() {
     .then((res) => {res.json()
       .then((categorie) => {
         setAllCategories(categorie)
-        createCategorieOption(categorie)
       })
     })
     .catch((err) => {console.log("failed to test")})
@@ -99,15 +87,12 @@ function PostContent() {
     return result
   }
 
-  console.log()
-
     return(
         <div id="allPostTitle">
         <Container>
           <Row>
             <Col md={12}>
               <h1 style={{"textAlign" : "center"}}>Tag/Categories Page</h1>
-              <h2>Categories</h2>
             </Col>
             {allpost.map((post) => {
               return (

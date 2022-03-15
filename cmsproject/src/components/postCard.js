@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 function PostCard(props) {
     let navigate = useNavigate(); 
     const routeChange = () =>{ 
-        navigate('/full-content', {state: {post : props.post}})
+        navigate('/full-content', {state: {post : props.post, categories: props.categories, tags: props.tags}})
     }
 
     return(
